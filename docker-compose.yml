@@ -1,0 +1,8 @@
+version: '3'
+service:
+        web:
+                image: httpd
+                volumes:
+                        - ./html:/usr/local/apache2/htdocs/
+                ports:
+                        - "8080:80"
