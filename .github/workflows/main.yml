@@ -1,0 +1,31 @@
+  
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull
+        run: |
+          cd ~/build/babylon
+          git pull
+          
+      - name: Build
+        run: |
+          cd ~/build/babylon
+          NBR=$(git rev-parse HEAD)
+          docker build -t babylon:$NBR -t babylon:latest .
+          
+      - name: Deploy
+        run: |
+          cd ~/websites/babylon
+          docker-compose up -d
