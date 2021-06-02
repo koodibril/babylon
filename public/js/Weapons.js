@@ -105,7 +105,7 @@ Weapons.prototype = {
 	    for (var i = 0; i < this.Armory.weapons.length; i++) {
 	        if(this.Armory.weapons[i].name === typeWeapon){
 
-	            newWeapon = BABYLON.Mesh.CreateBox('weaponHand', 0.5, this.Player.game.scene);
+	            newWeapon = BABYLON.Mesh.CreateBox('rocketLauncher', 0.5, this.Player.game.scene);
 
 	            // Nous faisons en sorte d'avoir une arme d'apparence plus longue que large
 	            newWeapon.scaling = new BABYLON.Vector3(1,0.7,2);
@@ -163,15 +163,15 @@ Weapons.prototype = {
 			var idWeapon = this.inventory[this.actualWeapon].typeWeapon;
 
 			// Détermine la taille de l'écran
-			var renderWidth = document.getElementById('renderCanvas').offsetWidth;
-			var renderHeight = document.getElementById('renderCanvas').offsetHeight;
+			var renderWidth = this.Player.game.engine.getRenderWidth(true);
+			var renderHeight = this.Player.game.engine.getRenderHeight(true);
 
 			// On récupère les munitions de l'arme
 			var weaponAmmos = this.inventory[this.actualWeapon].ammos;
 
 			// Cast un rayon au centre de l'écran
 			var direction = this.Player.game.scene.pick(renderWidth/2,renderHeight/2,function (item) {
-			    if (item.name == "weaponHand" || item.id == "headMainPlayer" || item.id == "hitBoxPlayer" || item.id == "camera")
+			    if (item.name == "weapon" || item.id == "headMainPlayer" || item.id == "hitBoxPlayer")
 			        return false;
 			    else
 			        return true;
@@ -388,6 +388,7 @@ Weapons.prototype = {
 	        return;
 	    }
 	    let typeWeapon = this.inventory[this.actualWeapon].typeWeapon;
+	    
 	    // On divise step par la valeur de timaAnimation de l'arme
 	    // On multiplie cette valeur par 180 
 	    let result = (step / this.Armory.weapons[typeWeapon].timeAnimation) * 180;
@@ -448,11 +449,9 @@ Weapons.prototype = {
 	                this.inventory[i].ammos += numberAmmos;
 	            }
 	            var actualTypeWeapon = this.Armory.weapons[this.inventory[this.actualWeapon].typeWeapon];
-	            if(this.inventory[this.actualWeapon].typeWeapon === type){
-	            	this.textAmmos.innerText = this.inventory[this.actualWeapon].ammos;
-		        	this.totalTextAmmos.innerText = actualTypeWeapon.setup.ammos.maximum;
-	            }
-		        
+		        this.textAmmos.innerText = this.inventory[this.actualWeapon].ammos;
+		        this.totalTextAmmos.innerText = actualTypeWeapon.setup.ammos.maximum;
+		        this.typeTextWeapon.innerText = actualTypeWeapon.name;
 	            break;
 	        }
 	    }

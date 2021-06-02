@@ -12,10 +12,10 @@ Game = function(canvasId,playerConfig,props) {
     _this.actualTime = Date.now();
 
     this.allSpawnPoints = [
-        new BABYLON.Vector3(-20,5,40),
-        new BABYLON.Vector3(20,5,40),
-        new BABYLON.Vector3(-20,5,-40),
-        new BABYLON.Vector3(20,5,-40)
+        new BABYLON.Vector3(-20, 5, 0),
+        new BABYLON.Vector3(0, 5, 0),
+        new BABYLON.Vector3(20, 5, 0),
+        new BABYLON.Vector3(-40, 5, 0)
     ];
 
     // On initie la scène avec une fonction associé à l'objet Game
@@ -97,7 +97,6 @@ Game.prototype = {
         for (var i = 0; i < this._rockets.length; i++) {
             // Les paramètres de la roquette
             var paramsRocket = this._rockets[i].paramsRocket;
-            var paramsBlast = paramsRocket.ammos;
 
             // On crée un rayon qui part de la base de la roquette vers l'avant
             var rayRocket = new BABYLON.Ray(this._rockets[i].position,this._rockets[i].direction);
@@ -109,16 +108,16 @@ Game.prototype = {
             if(!meshFound || meshFound.distance < 10){
                 // On vérifie qu'on a bien touché quelque chose
                 if(meshFound.pickedMesh && !meshFound.pickedMesh.isMain){
+                    console.log('test')
                     // On crée une sphere qui représentera la zone d'impact
-                    var explosionRadius = BABYLON.Mesh.CreateSphere("sphere", 5.0, paramsBlast.explosionRadius/2, this.scene, false, BABYLON.Mesh.DOUBLESIDE);
+                    var explosionRadius = BABYLON.Mesh.CreateSphere("sphere", 5.0, 20, this.scene);
                     // On positionne la sphère la ou il y a eu impact
                     explosionRadius.position = meshFound.pickedPoint;
                     // On fais en sorte que les explosions ne soit pas considéré pour le Ray de la roquette
                     explosionRadius.isPickable = false;
                     // On crée un petit material orange
                     explosionRadius.material = new BABYLON.StandardMaterial("textureExplosion", this.scene);
-                    explosionRadius.material.diffuseColor = new BABYLON.Color3(1,0.2,0);
-                    explosionRadius.material.emissiveColor = new BABYLON.Color3(1,0.2,0);
+                    explosionRadius.material.diffuseColor = new BABYLON.Color3(1,0.6,0);
                     explosionRadius.material.specularColor = new BABYLON.Color3(0,0,0);
                     explosionRadius.material.alpha = 0.8;
 
