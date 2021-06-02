@@ -479,7 +479,6 @@ Arena.prototype = {
         this.textArmor.innerText = this.camera.armor;
     },
     deletePropFromServer : function(deletedProp){
-        console.log(deletedProp);
         // idServer est l'id de l'arme
         var idServer = deletedProp[0];
         

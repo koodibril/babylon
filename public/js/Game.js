@@ -108,7 +108,6 @@ Game.prototype = {
             if(!meshFound || meshFound.distance < 10){
                 // On vérifie qu'on a bien touché quelque chose
                 if(meshFound.pickedMesh && !meshFound.pickedMesh.isMain){
-                    console.log('test')
                     // On crée une sphere qui représentera la zone d'impact
                     var explosionRadius = BABYLON.Mesh.CreateSphere("sphere", 5.0, 20, this.scene);
                     // On positionne la sphère la ou il y a eu impact
