@@ -5,6 +5,17 @@ var express = require('express')
 
 var app = express();
 var server = http.createServer(app);
+
+// ================================================
+// START LISTENING ON THE PORT
+server.listen(80, '0.0.0.0', function () {
+    var host = server.address().address;
+    var port = server.address().port;
+
+    console.log('JustSquare listening at http://%s:%s', host, port);
+});
+// ================================================
+
 var io = require("socket.io")(server, {
   });
 
@@ -101,7 +112,9 @@ var countUsers = 0; // number of users since the beginning of the server
 // ================================================
 // USE PUBLIC FOLDER AS STATIC FOLDER
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname));
 app.use('/static', express.static(__dirname + '/public'));
+app.use('/static', express.static(__dirname));
 // ================================================
 
 
@@ -287,16 +300,4 @@ var launchCountDownRepop = function(time,dataRemoved){
 setInterval(function(){
     io.emit('requestPosition',room);
 }, 5000);
-// ================================================
-
-
-
-// ================================================
-// START LISTENING ON THE PORT
-server.listen(80, function () {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log('JustSquare listening at http://%s:%s', host, port);
-});
 // ================================================
